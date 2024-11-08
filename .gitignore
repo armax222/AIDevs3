@@ -1,4 +1,13 @@
-# related to the project
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Environment and virtual environment folders
+.env
+.venv
+env/
+venv/
 *.env
 
 # macOS system files
