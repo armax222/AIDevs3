@@ -19,19 +19,19 @@ class OpenAIClient:
         self.client = OpenAI(api_key=OPEN_AI_API_KEY)
         self.model = model  # Default model, you can override it per request
 
-    def get_completion(self, prompt, model=None, max_tokens=1500, temperature=0.2):
+    def get_completion(self, messages, model=None, max_tokens=1500, temperature=0.2):
         """
-        Get a completion from OpenAI for a given prompt.
+        Get a completion from OpenAI using ChatML (messages array).
 
-        :param prompt: The prompt to send to the model.
+        :param messages: A list of messages in ChatML format (role-content pairs).
         :param model: The model to use (defaults to self.model if not specified).
         :param max_tokens: Maximum tokens for the response.
         :param temperature: The sampling temperature for the model.
         :return: The model's response or None if an error occurs.
         """
-        # Use the specified model or default to the one set in the class
+        # Use the specified model or the default one
         model_to_use = model or self.model
-        messages = [{"role": "user", "content": prompt}]
+        
         try:
             response = self.client.chat.completions.create(
                 model=model_to_use,
@@ -43,6 +43,7 @@ class OpenAIClient:
         except Exception as e:
             print(f"An error occurred: {e}")
             return None
+
 
 
 class AIDevsClient:

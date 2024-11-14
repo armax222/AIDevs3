@@ -27,3 +27,7 @@ S01E01_TASK_URL = get_env_variable('S01E01_TASK_URL')
 S01E01_TASK_USERNAME = get_env_variable('S01E01_TASK_USERNAME')
 S01E01_TASK_PASSWORD = get_env_variable('S01E01_TASK_PASSWORD')
 
+#S01E02
+S01E02_TASK_URL = get_env_variable('S01E02_TASK_URL')
+
+
