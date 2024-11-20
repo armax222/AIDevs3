@@ -1,26 +1,38 @@
 # Import necessary modules
 from utilities.common import AIDevsClient
-from utilities.config import S00E01_DATA_URL
+from utilities.config import S00E01_DATA_URL, AI_DEVS_API_ENDPOINT, AI_DEVS_API_KEY
 
-# Configuration
-task_name = "POLIGON"  # Consider moving to a config file if it changes often
-data_url = S00E01_DATA_URL
-
-# Initialize the AIDevs client
+# Initialize the client
 client_aidevs = AIDevsClient()
 
+# Configuration
+task_name = "POLIGON"
+data_url = S00E01_DATA_URL
+submit_url = AI_DEVS_API_ENDPOINT
+
 def main():
-    """Main function to retrieve data and submit answers."""
     # Step 1: Retrieve data using the client method
-    data_list = client_aidevs.fetch_data(data_url)
+    answer_data = client_aidevs.fetch_data(data_url)
 
-    # Step 2: Submit the answer if data is successfully retrieved
-    if data_list:
-        submit_response = client_aidevs.submit_answer(task_name, data_list)
-        print("Submit response:", submit_response)
+    # Step 2: Submit the answer
+    if answer_data:
+        # Prepare the payload in the correct structure
+        payload = {
+            "task": task_name,
+            "apikey": AI_DEVS_API_KEY,
+            "answer": answer_data  
+        }
+
+        # Submit the payload
+        submit_response = client_aidevs.submit_answer(task_name=task_name, answer=payload, submit_url=submit_url)
+        
+        # Handle response
+        if submit_response:
+            print("Submit response:", submit_response)
+        else:
+            print("Submission failed.")
     else:
-        print("No data retrieved from the URL.")
+        print("Failed to retrieve data.")
 
-# Entry point of the script
 if __name__ == "__main__":
     main()

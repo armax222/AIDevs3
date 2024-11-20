@@ -30,4 +30,6 @@ S01E01_TASK_PASSWORD = get_env_variable('S01E01_TASK_PASSWORD')
 #S01E02
 S01E02_TASK_URL = get_env_variable('S01E02_TASK_URL')
 
-
+#S01E03
+S01E03_TASK_URL = get_env_variable('S01E03_TASK_URL') + AI_DEVS_API_KEY + "/json.txt"
+S01E03_REPORT_URL = get_env_variable('S01E03_REPORT_URL')

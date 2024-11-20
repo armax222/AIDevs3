@@ -77,27 +77,26 @@ class AIDevsClient:
             print(f"Error fetching data from {url}: {e}")
             return None
 
-    def submit_answer(self, task_name, answer):
+    def submit_answer(self, task_name, answer, submit_url=None):
         """
         Submit an answer for a task, including API key in the payload as required.
         
         :param task_name: Identifier for the task.
-        :param answer: Answer to be submitted (should be a list, not a JSON string).
+        :param answer: The full payload to be sent.
+        :param submit_url: URL for submission (overrides the default endpoint).
         :return: API response or None if request fails.
         """
-        url = f"{self.base_url}/verify"
-        payload = {
-            "task": task_name,
-            "apikey": self.api_key,  # Include the API key directly in the payload
-            "answer": answer  # Answer is sent as a JSON array, not as a string
-        }
+        if submit_url is None:
+            submit_url = f"{self.base_url}/verify"  # Default URL
+        
         try:
-            response = requests.post(url, json=payload)
+            response = requests.post(submit_url, json=answer, headers={"Content-Type": "application/json"})
             response.raise_for_status()
             return response.json()
         except requests.RequestException as e:
-            print(f"Error in POST request to verify: {e}")
+            print(f"Error in POST request to {submit_url}: {e}")
             return None
+
 
 
 

@@ -12,7 +12,7 @@ This repository contains the code and solutions for the third edition of the AID
 
 ## Getting Started
 
-1. **Configure the `.env` File (use "save as dot env" File) **:
+1. **Configure the `.env` File (use ".env - example" File) **:
    - `AI_DEVS_API_KEY`: AIDevs API key.
    - `OPEN_AI_API_KEY`: OpenAI API key.
    - ... and other task specific variables.
