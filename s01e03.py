@@ -53,7 +53,7 @@ def main():
         }
 
         # Submit payload using the modified AIDevsClient
-        response = client_aidevs.submit_answer(task_name=TASK_NAME, answer=payload, submit_url=SUBMIT_URL)
+        response = client_aidevs.submit_answer(answer=payload, submit_url=SUBMIT_URL)
 
         if response:
             print(f"Request successful! Response: {response}")

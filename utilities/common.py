@@ -77,7 +77,7 @@ class AIDevsClient:
             print(f"Error fetching data from {url}: {e}")
             return None
 
-    def submit_answer(self, task_name, answer, submit_url=None):
+    def submit_answer(self, answer, submit_url=None):
         """
         Submit an answer for a task, including API key in the payload as required.
         

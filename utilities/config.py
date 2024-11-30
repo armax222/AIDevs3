@@ -33,3 +33,7 @@ S01E02_TASK_URL = get_env_variable('S01E02_TASK_URL')
 #S01E03
 S01E03_TASK_URL = get_env_variable('S01E03_TASK_URL') + AI_DEVS_API_KEY + "/json.txt"
 S01E03_REPORT_URL = get_env_variable('S01E03_REPORT_URL')
+
+#S01E05
+S01E05_TASK_URL = get_env_variable('S01E05_TASK_URL') + AI_DEVS_API_KEY + "/cenzura.txt"
+S01E05_REPORT_URL = get_env_variable('S01E05_REPORT_URL')

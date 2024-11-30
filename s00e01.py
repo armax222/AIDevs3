@@ -24,7 +24,7 @@ def main():
         }
 
         # Submit the payload
-        submit_response = client_aidevs.submit_answer(task_name=task_name, answer=payload, submit_url=submit_url)
+        submit_response = client_aidevs.submit_answer(answer=payload, submit_url=submit_url)
         
         # Handle response
         if submit_response:
@@ -36,3 +36,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
