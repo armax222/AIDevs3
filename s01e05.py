@@ -29,7 +29,7 @@ def main():
         ]
         censored_text = client_openai.get_completion(
             messages=messages,
-            model="gpt-4o",
+            model="gpt-4o-mini",
             temperature=0.1
         ).strip()
         print("Censored Text: " + censored_text)
