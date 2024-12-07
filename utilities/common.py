@@ -71,70 +71,28 @@ class OpenAIClient:
         except Exception as e:
             print(f"An error occurred during transcription: {e}")
             return None
-
-
-
-
-# # Standard library imports
-# import requests
-
-# # Third-party imports
-# from openai import OpenAI
-
-# # Local imports
-# from utilities.config import AI_DEVS_API_ENDPOINT, AI_DEVS_API_KEY, OPEN_AI_API_KEY
-
-# class OpenAIClient:
-#     """
-#     A client to interact with OpenAI's Chat Completion API for generating responses.
-#     """
-
-#     def __init__(self, model="gpt-4o"):
-#         """
-#         Initialize the OpenAI client using the API key.
-#         """
-#         self.client = OpenAI(api_key=OPEN_AI_API_KEY)
-#         self.model = model  # Default model, you can override it per request
-
-#     def get_completion(self, messages, model=None, max_tokens=1500, temperature=0.2):
-#         """
-#         Get a completion from OpenAI using ChatML (messages array).
-
-#         :param messages: A list of messages in ChatML format (role-content pairs).
-#         :param model: The model to use (defaults to self.model if not specified).
-#         :param max_tokens: Maximum tokens for the response.
-#         :param temperature: The sampling temperature for the model.
-#         :return: The model's response or None if an error occurs.
-#         """
-#         # Use the specified model or the default one
-#         model_to_use = model or self.model
         
-#         try:
-#             response = self.client.chat.completions.create(
-#                 model=model_to_use,
-#                 messages=messages,
-#                 max_tokens=max_tokens,
-#                 temperature=temperature,
-#             )
-#             return response.choices[0].message.content.strip()
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return None
-    
-#     def transcribe(self, audio_file):
-#         """
-#         Transcribes an audio file using OpenAI's Whisper API.
-
-#         :param audio_file: Opened binary file of the audio to transcribe.
-#         :return: Transcription result as a dictionary.
-#         """
-#         try:
-#             response = openai.Audio.transcribe("whisper-1", audio_file)
-#             return response  # Returns the entire transcription result
-#         except Exception as e:
-#             print(f"An error occurred during transcription: {e}")
-#             return None
-
+    def generate_image(self, prompt: str, model: str = "dall-e-3", size: str = "1024x1024", 
+                    quality: str = "standard", format: str = "png") -> str:
+        """Generate an image using DALL-E and return the URL."""
+        try:
+            response = requests.post(
+                "https://api.openai.com/v1/images/generations",
+                headers=self.headers,
+                json={
+                    "model": model,
+                    "prompt": prompt,
+                    "n": 1,
+                    "size": size,
+                    "quality": quality,
+                    "response_format": "url"
+                }
+            )
+            response.raise_for_status()
+            return response.json()["data"][0]["url"]
+        except Exception as e:
+            print(f"Error generating image: {e}")
+            return None
 
 
 class AIDevsClient:

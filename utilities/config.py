@@ -41,3 +41,7 @@ S01E05_REPORT_URL = get_env_variable('S01E05_REPORT_URL')
 #S02E01
 S02E01_TASK_URL = get_env_variable('S02E01_TASK_URL')
 S02E01_REPORT_URL = get_env_variable('S02E01_REPORT_URL')
+
+#S02E03
+S02E03_TASK_URL = get_env_variable('S02E03_TASK_URL') + AI_DEVS_API_KEY + "/robotid.json"
+S02E03_REPORT_URL = get_env_variable('S02E03_REPORT_URL')
