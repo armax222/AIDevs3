@@ -1,7 +1,6 @@
 # AIDevs3 specifics
-transcripts.txt
-przesluchania.zip
-/audio_files
+/s02e01
+/s02e02
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
