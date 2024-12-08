@@ -130,171 +130,47 @@ class AIDevsClient:
         """
         Submit an answer for a task, including API key in the payload as required.
         
-        :param task_name: Identifier for the task.
         :param answer: The full payload to be sent.
         :param submit_url: URL for submission (overrides the default endpoint).
         :return: API response or None if request fails.
         """
-        if submit_url is None:
-            submit_url = f"{self.base_url}/verify"  # Default URL
+        url = submit_url if submit_url else f"{self.base_url}/verify"
         
         try:
-            response = requests.post(submit_url, json=answer, headers={"Content-Type": "application/json"})
-            response.raise_for_status()
-            return response.json()
+            response = requests.post(
+                url, 
+                json=answer,
+                headers={"Content-Type": "application/json"}
+            )
+            if response.ok:
+                return response.json()
+            else:
+                print(f"Error {response.status_code}: {response.text}")
+                return None
         except requests.RequestException as e:
-            print(f"Error in POST request to {submit_url}: {e}")
+            print(f"Error in POST request to {url}: {e}")
             return None
 
-
-
-
-
-
-#old version of openai client
-
-# class OpenAIClient:
-#     """
-#     A client to interact with OpenAI's API.
-#     Provides a method to obtain completions.
-#     """
-
-#     def __init__(self, api_key):
-#         """
-#         Initialize the OpenAI client with an API key.
-
-#         :param api_key: API key for OpenAI. If None, it defaults to the environment variable.
-#         """
-#         self.client = OpenAI(api_key=api_key)
-
-#     def get_completion(self, prompt, model="gpt-4", max_tokens=300, temperature=0.3):
-#         """
-#         Get a completion response from OpenAI for a given prompt.
-
-#         :param prompt: Text prompt for the completion.
-#         :param model: OpenAI model to use.
-#         :param max_tokens: Maximum tokens in the response.
-#         :param temperature: Sampling temperature.
-#         :return: Completion response or None if request fails.
-#         """
-#         messages = [{"role": "user", "content": prompt}]
-#         try:
-#             chat_completion = self.client.chat.completions.create(
-#                 model=model,
-#                 messages=messages,
-#                 temperature=temperature,
-#                 max_tokens=max_tokens,
-#             )
-#             # Accessing the message content from the response object
-#             return chat_completion.choices[0].message.content
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return None
-
-#     def get_completion_use_tools(self, prompt, tools, model="gpt-4-1106-preview", tool_choice="auto"):
-#         """
-#         Create a chat completion with custom messages and tools.
-
-#         :param messages: List of messages for the chat.
-#         :param tools: List of tools to be used in the chat.
-#         :param model: The OpenAI model to use.
-#         :return: Chat completion response or None if request fails.
-#         """
-#         messages = [{"role": "user", "content": prompt}]
-#         try:
-#             response = self.client.chat.completions.create(
-#                 model=model,
-#                 messages=messages,
-#                 tools=tools,
-#                 tool_choice="auto",
-#             )
-#             return response
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return None
+    # previous version of submit_answer
+    # def submit_answer(self, answer, submit_url=None):
+    #     """
+    #     Submit an answer for a task, including API key in the payload as required.
         
-#     def moderate_content(self, content):
-#         """
-#         Send content to the Moderation endpoint.
-
-#         :param content: The content to be moderated.
-#         :return: 1 if flagged, else 0.
-#         """
-#         try:
-#             response = self.client.moderations.create(input=content)
-#             flagged = int(response.results[0].flagged)
-#             return flagged
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return None
-
-#     def get_embedding(self, text, model="text-embedding-ada-002"):
-#         """
-#         Get a vector embedding from OpenAI for a given text.
+    #     :param task_name: Identifier for the task.
+    #     :param answer: The full payload to be sent.
+    #     :param submit_url: URL for submission (overrides the default endpoint).
+    #     :return: API response or None if request fails.
+    #     """
+    #     if submit_url is None:
+    #         submit_url = f"{self.base_url}/verify"  # Default URL
         
-#         :param text: Text to generate embedding for.
-#         :param model: OpenAI model to use for embedding.
-#         :return: Embedding vector or None if request fails.
-#         """
-#         text = text.replace("\n", " ")
-#         try:
-#             response = self.client.embeddings.create(input=text, model=model)
-#             # Accessing the embedding from the response object's attributes
-#             return response.data[0].embedding
-#         except OpenAIError as e:
-#             print(f"OpenAI error: {e}")
-#             return None
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return None
-
-#     def audio_transcription(self, file_path, model="whisper-1"):
-#         """
-#         Create an audio transcription using OpenAI's API.
-
-#         :param file_path: Path to the audio file to be transcribed.
-#         :param model: The OpenAI model to use for transcription.
-#         :return: Transcription result or None if request fails.
-#         """
-#         try:
-#             # Ensure the file is a PathLike instance
-#             transcript = self.client.audio.transcriptions.create(model=model, file=file_path).text
-#             # Accessing and returning the transcription result
-#             return transcript
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return None
-
-#     def image_analyze(self, image_url, question, model="gpt-4-vision-preview", max_tokens=300):
-#         """
-#         Analyze an image using GPT-4 with Vision.
-
-#         :param image_url: URL of the image to be analyzed.
-#         :param question: Question about the image.
-#         :param model: The GPT-4 model with vision capabilities.
-#         :param max_tokens: Maximum tokens in the response.
-#         :return: Analysis response or None if request fails.
-#         """
-#         messages = [
-#             {
-#                 "role": "user",
-#                 "content": [
-#                     {"type": "text", "text": question},
-#                     {"type": "image_url", "image_url": {"url": image_url}},
-#                 ],
-#             }
-#         ]
-#         try:
-#             response = self.client.chat.completions.create(
-#                 model=model,
-#                 messages=messages,
-#                 max_tokens=max_tokens,
-#             )
-#             return response.choices[0].message.content
-#         except Exception as e:
-#             print(f"An error occurred: {e}")
-#             return None
+    #     try:
+    #         response = requests.post(submit_url, json=answer, headers={"Content-Type": "application/json"})
+    #         response.raise_for_status()
+    #         return response.json()
+    #     except requests.RequestException as e:
+    #         print(f"Error in POST request to {submit_url}: {e}")
+    #         return None
 
 
 
-    

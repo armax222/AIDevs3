@@ -35,14 +35,19 @@ def main():
         print("Censored Text: " + censored_text)
 
         # Step 3: Prepare the payload
+        answer = censored_text  # The actual censored text
+
         payload = {
             "task": TASK_NAME,
             "apikey": API_KEY,
-            "answer": censored_text
+            "answer": answer
         }
 
-        # Step 4: Submit the censored data using the client method
-        response = client_aidevs.submit_answer(answer=payload, submit_url=SUBMIT_URL)
+        # Step 4: Submit using the client method
+        response = client_aidevs.submit_answer(
+            answer=payload, 
+            submit_url=SUBMIT_URL
+        )
 
         # Handle response
         if response:
