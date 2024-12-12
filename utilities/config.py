@@ -49,3 +49,9 @@ S02E03_REPORT_URL = get_env_variable('S02E03_REPORT_URL')
 #S02E04
 S02E04_TASK_URL = get_env_variable('S02E04_TASK_URL')
 S02E04_REPORT_URL = get_env_variable('S02E04_REPORT_URL')
+
+#S02E05
+S02E05_TASK_URL = get_env_variable('S02E05_TASK_URL') + AI_DEVS_API_KEY + "/arxiv.txt"
+S02E05_DATA_URL = get_env_variable('S02E05_DATA_URL')
+S02E05_REPORT_URL = get_env_variable('S02E05_REPORT_URL')
+
