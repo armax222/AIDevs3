@@ -55,3 +55,7 @@ S02E05_TASK_URL = get_env_variable('S02E05_TASK_URL') + AI_DEVS_API_KEY + "/arxi
 S02E05_DATA_URL = get_env_variable('S02E05_DATA_URL')
 S02E05_REPORT_URL = get_env_variable('S02E05_REPORT_URL')
 
+#S03E01
+S03E01_TASK_URL = get_env_variable('S03E01_TASK_URL')
+S03E01_REPORT_URL = get_env_variable('S03E01_REPORT_URL')
+

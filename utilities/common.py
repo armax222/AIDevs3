@@ -151,26 +151,3 @@ class AIDevsClient:
             print(f"Error in POST request to {url}: {e}")
             return None
 
-    # previous version of submit_answer
-    # def submit_answer(self, answer, submit_url=None):
-    #     """
-    #     Submit an answer for a task, including API key in the payload as required.
-        
-    #     :param task_name: Identifier for the task.
-    #     :param answer: The full payload to be sent.
-    #     :param submit_url: URL for submission (overrides the default endpoint).
-    #     :return: API response or None if request fails.
-    #     """
-    #     if submit_url is None:
-    #         submit_url = f"{self.base_url}/verify"  # Default URL
-        
-    #     try:
-    #         response = requests.post(submit_url, json=answer, headers={"Content-Type": "application/json"})
-    #         response.raise_for_status()
-    #         return response.json()
-    #     except requests.RequestException as e:
-    #         print(f"Error in POST request to {submit_url}: {e}")
-    #         return None
-
-
-
