@@ -6,7 +6,16 @@ import shutil
 from utilities.common import AIDevsClient, OpenAIClient
 from utilities.config import AI_DEVS_API_KEY, S03E01_TASK_URL, S03E01_REPORT_URL
 
-def read_file_content(path, client_openai):
+# =========================================================
+# Configuration
+# =========================================================
+TASK_NAME = "dokumenty"
+ZIP_URL = S03E01_TASK_URL
+ZIP_PATH = "s03e01/pliki_z_fabryki.zip"
+EXTRACT_FOLDER = "s03e01/files"
+SUBMIT_URL = S03E01_REPORT_URL
+
+def read_file_content(path):
     """Read content from a file or directory of files.
     Supports: single files (txt/mp3/wav/png) or directories containing txt files."""
     try:
@@ -16,7 +25,7 @@ def read_file_content(path, client_openai):
             for root, _, files in os.walk(path):
                 for f in files:
                     file_path = os.path.join(root, f)
-                    file_content = read_file_content(file_path, client_openai)
+                    file_content = read_file_content(file_path)
                     print(file_path, file_content)
                     if file_content:
                         content.append(file_path + ": " + file_content)
@@ -71,8 +80,11 @@ def generate_keywords(content, facts_summary, client_openai):
                 "Przeanalizuj poniższy dokument w kontekście podanych faktów "
                 "i wygeneruj słowa kluczowe, które łączą się z szerszym kontekstem, "
                 "szczególnie uwzględniając wykonywane dawniej zawody, znane języki programowania i sektor gdzie znaleziono ich ślady.\n\n"
-                f"Dokument:\n{content}\n\n"
-                f"Kontekst:\n{facts_summary}"
+                
+                "Dokument:\n"
+                f"{content}\n\n"
+                "Kontekst:\n"
+                f"{facts_summary}"
             )
         }
     ]
@@ -84,13 +96,6 @@ def generate_keywords(content, facts_summary, client_openai):
     ).strip()
 
 def main():
-    # Configuration
-    TASK_NAME = "dokumenty"
-    ZIP_URL = S03E01_TASK_URL
-    ZIP_PATH = "s03e01/pliki_z_fabryki.zip"
-    EXTRACT_FOLDER = "s03e01/files"
-    SUBMIT_URL = S03E01_REPORT_URL
-
     # Initialize clients
     client_aidevs = AIDevsClient()
     client_openai = OpenAIClient()
@@ -113,19 +118,20 @@ def main():
     with zipfile.ZipFile(ZIP_PATH, 'r') as zip_ref:
         zip_ref.extractall(EXTRACT_FOLDER)
 
-    # Process files and generate facts
-    facts = read_file_content("s03e01", client_openai)
+    # Process files
+    facts = read_file_content("s03e01")
     
     # Summarize facts
     facts_summary = client_openai.get_completion(
         messages=[{
             "role": "user",
             "content": f"Summarize the following information about indyviduals, their profesions, known programming languages and if trace of them is found, describe it in detail and extract exact name of sector (A1-C4): {facts}"
-                      "Think step-by-step about the content to make sure you have all the information."
+                        "Think step-by-step about the content to make sure you have all the information."
         }],
         model="gpt-4o-mini",
         temperature=0.1
     )
+
     print(facts_summary)
 
     # Generate keywords for each file
@@ -133,7 +139,7 @@ def main():
     for file in sorted(os.listdir(EXTRACT_FOLDER)):
         if file.endswith('.txt') and not os.path.join(EXTRACT_FOLDER, file).startswith(os.path.join(EXTRACT_FOLDER, "facts")):
             print(f"Processing {file}...")
-            content = read_file_content(os.path.join(EXTRACT_FOLDER, file), client_openai)
+            content = read_file_content(os.path.join(EXTRACT_FOLDER, file))
             keywords = generate_keywords(content, facts_summary, client_openai)
             keywords_dict[file] = keywords
 
@@ -150,6 +156,7 @@ def main():
         answer=payload,
         submit_url=SUBMIT_URL
     )
+
     print(f"Submission response: {response}")
 
 if __name__ == "__main__":
