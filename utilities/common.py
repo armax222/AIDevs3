@@ -93,6 +93,30 @@ class OpenAIClient:
         except Exception as e:
             print(f"Error generating image: {e}")
             return None
+        
+    def create_embeddings(self, text: str, model: str = "text-embedding-3-small"):
+        """
+        Create embeddings for text using OpenAI's API.
+
+        :param text: Text to create embeddings for.
+        :param model: Model to use for embeddings.
+        :return: List of embedding values or None if request fails.
+        """
+        try:
+            response = requests.post(
+                "https://api.openai.com/v1/embeddings",
+                headers=self.headers,
+                json={
+                    "model": model,
+                    "input": text
+                }
+            )
+            response.raise_for_status()
+            # Extract just the embedding values from the response
+            return response.json()['data'][0]['embedding']
+        except Exception as e:
+            print(f"An error occurred during embedding creation: {e}")
+            return None 
 
 
 class AIDevsClient:
