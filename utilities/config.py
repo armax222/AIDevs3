@@ -72,3 +72,7 @@ S03E04_TASK_URL = get_env_variable('S03E04_TASK_URL')
 S03E04_REPORT_URL = get_env_variable('S03E04_REPORT_URL')
 S03E04_PEOPLE_URL = get_env_variable('S03E04_PEOPLE_URL')
 S03E04_CITIES_URL = get_env_variable('S03E04_CITIES_URL')
+
+#S03E05
+S03E05_TASK_URL = get_env_variable('S03E05_TASK_URL')
+S03E05_REPORT_URL = get_env_variable('S03E05_REPORT_URL')
