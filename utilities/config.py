@@ -81,6 +81,10 @@ S03E05_REPORT_URL = get_env_variable('S03E05_REPORT_URL')
 S04E01_TASK_URL = get_env_variable('S04E01_TASK_URL')
 S04E01_REPORT_URL = get_env_variable('S04E01_REPORT_URL')
 
+#S04E02
+S04E02_TASK_URL = get_env_variable('S04E02_TASK_URL')
+S04E02_REPORT_URL = get_env_variable('S04E02_REPORT_URL')
+
 #S04E03
 S04E03_TASK_URL = get_env_variable('S04E03_TASK_URL')
 S04E03_WWW_URL = get_env_variable('S04E03_WWW_URL')
