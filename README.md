@@ -7,8 +7,8 @@ This repository contains the code and solutions for the third edition of the AID
 ## Instructors
 
 - **Adam Gospodarczyk** ([@overment](https://twitter.com/overment)) - Co-founder of EasyCart
-- **Jakub Mrugalski** - Creator of UNKNOW NEWS, trainer at Niebezpiecznik.pl
-- **Mateusz Chrobok** - Head of Fraud Intelligence at Nethone
+- **Jakub Mrugalski** - Creator of newsletters UNKNOW NEWS and https://weekbyte.com/ ,trainer at Niebezpiecznik.pl
+- **Mateusz Chrobok** - Creator of https://uczmnie.pl YouTuber, https://www.youtube.com/@MattChrobok 
 
 ## Getting Started
 
